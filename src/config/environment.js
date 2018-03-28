@@ -1,10 +1,7 @@
-import Immutable from 'seamless-immutable';
+const development = test = __DEV__;
+const production = !development;
 
-const environment = Immutable({
-  development: __DEV__,
-  test: __DEV__,
-  production: __DEV__,
-});
+const environment = production ? 'production' : 'development';
 
 const redux = {
   logging: __DEV__,
@@ -12,5 +9,8 @@ const redux = {
 
 export {
   environment,
+  development,
+  test,
+  production,
   redux,
 };
