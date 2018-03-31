@@ -1,14 +1,20 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { TabNavigator } from 'react-navigation';
 
 import Home from './Home';
 
-const Navigator = StackNavigator(
+const Navigator = TabNavigator(
   {
     Home: {
       screen: Home,
       navigationOptions: {
-        title: 'Home',
+        title: 'Quiz',
+      },
+    },
+    CreateDecks: {
+      screen: Home,
+      navigationOptions: {
+        title: 'Create Decks',
       },
     },
   },

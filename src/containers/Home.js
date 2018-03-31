@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
 import styles from './styles/Home';
-import FixtureService from '../services/FixtureService';
 import { getDecks } from '../services/APIService';
 
 class Home extends Component {
@@ -10,19 +9,19 @@ class Home extends Component {
     decks: [],
   }
 
-  componentDidMount = () => {
-    FixtureService();
-    getDecks().then((decks) => {
-      console.log(decks);
-      this.setState({ decks });
-    });
+  componentDidMount = async () => {
+    const { decks } = await getDecks();
+
+    console.info('RESPONSE', decks);
+
+    this.setState({ decks });
   }
 
   render = () => {
     const { decks } = this.state;
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { marginTop: 100 }]}>
         <Text>{decks.map(({ title }) => title).join(' ')}</Text>
       </View>
     );
