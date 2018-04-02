@@ -2,13 +2,14 @@ import React from 'react';
 import { TabNavigator } from 'react-navigation';
 
 import Home from './Home';
+import TabBar from '../components/TabBar';
 
 const Navigator = TabNavigator(
   {
     Home: {
       screen: Home,
       navigationOptions: {
-        title: 'Quiz',
+        title: 'Decks',
       },
     },
     CreateDecks: {
@@ -19,7 +20,8 @@ const Navigator = TabNavigator(
     },
   },
   {
-    initialRouteName: 'Home',
+    tabBarComponent: props => <TabBar {...props} />,
+    tabBarPosition: 'bottom',
   },
 );
 
