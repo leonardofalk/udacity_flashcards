@@ -1,9 +1,7 @@
-/* eslint-disable global-require */
-
 import { combineReducers } from 'redux';
 
-import { reducer as rootReducer } from './RootReducer';
+import { reducer as fetchDecks } from './FetchDecks';
 
 export default combineReducers({
-  rootReducer,
+  fetchDecks,
 });

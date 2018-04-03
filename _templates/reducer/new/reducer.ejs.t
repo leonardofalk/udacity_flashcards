@@ -14,7 +14,7 @@ export const INITIAL_STATE = Immutable({
 const { Types, Creators } = createActions({
   <%= NAME_CAMEL %>Request: ['data'],
   <%= NAME_CAMEL %>Success: ['payload'],
-  <%= NAME_CAMEL %>Failure: null,
+  <%= NAME_CAMEL %>Failure: ['error'],
 });
 
 export const CustomTypes = Types;

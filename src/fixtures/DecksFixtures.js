@@ -8,15 +8,17 @@ export const clearStorage = async () => AsyncStorage.clear();
 export const fixtures = [
   {
     title: 'react',
-    cards: [{
-      question: 'Are these very dumb questions ?',
-      answer: 'Yes',
-    },
+    cards: [
+      {
+        question: 'Are these very dumb questions ?',
+        answer: 'Yes',
+      },
 
-    {
-      question: 'Is ReactJS the coolest library ?',
-      answer: 'Yes',
-    }],
+      {
+        question: 'Is ReactJS the coolest library ?',
+        answer: 'Yes',
+      },
+    ],
   },
   {
     title: 'redux',
@@ -38,9 +40,9 @@ export default async (force = false) => {
     return false;
   }
 
-  const { decks } = getDecks();
+  const response = getDecks();
 
-  if (!force && !_.isEmpty(decks)) {
+  if (!force && !_.isEmpty(_.get(response, 'payload.decks', []))) {
     return false;
   }
 

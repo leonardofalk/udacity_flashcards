@@ -9,9 +9,9 @@ export const INITIAL_STATE = Immutable({
 });
 
 const { Types, Creators } = createActions({
-  RootReducerRequest: ['data'],
-  RootReducerSuccess: ['payload'],
-  RootReducerFailure: null,
+  FetchDecksRequest: ['data'],
+  FetchDecksSuccess: ['payload'],
+  FetchDecksFailure: ['error'],
 });
 
 export const CustomTypes = Types;
@@ -30,7 +30,7 @@ export const failure = (state, { error }) => (
 );
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.ROOT_REDUCER_REQUEST]: request,
-  [Types.ROOT_REDUCER_SUCCESS]: success,
-  [Types.ROOT_REDUCER_FAILURE]: failure,
+  [Types.FETCH_DECKS_REQUEST]: request,
+  [Types.FETCH_DECKS_SUCCESS]: success,
+  [Types.FETCH_DECKS_FAILURE]: failure,
 });

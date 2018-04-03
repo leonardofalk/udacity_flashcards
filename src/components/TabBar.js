@@ -20,6 +20,7 @@ class TabBar extends Component {
           navigation.navigate(routeName)
         )}
         icon={<Icon type="file-add" />}
+        selectedIcon={<Icon type="file-add" />}
       />
     ));
   }
