@@ -18,7 +18,7 @@ const getDecks = async () => {
   try {
     const decks = await getItem();
 
-    return { ok: true, payload: { decks } };
+    return { ok: true, decks };
   } catch (error) {
     logger(error);
 
@@ -30,7 +30,7 @@ const getDeck = async ({ title }) => {
   try {
     const { decks } = await getDecks();
 
-    return { ok: true, payload: { deck: decks[title] } };
+    return { ok: true, deck: decks[title] };
   } catch (error) {
     logger(error);
 
@@ -40,13 +40,15 @@ const getDeck = async ({ title }) => {
 
 const createDeck = async ({ title }) => {
   try {
-    const newDeck = { title, questions: [] };
+    const newDeck = { title, cards: [] };
     const response = await getDecks();
     const decks = response.decks.concat(newDeck);
 
     await setItem(decks);
 
-    return { ok: true, payload: { decks } };
+    logger('CREATE_DECK', decks);
+
+    return { ok: true, decks };
   } catch (error) {
     logger(error);
 
@@ -70,7 +72,7 @@ const updateDeck = async ({ title, card }) => {
 
     await setItem(decks);
 
-    return { ok: true, payload: { decks } };
+    return { ok: true, decks };
   } catch (error) {
     logger(error);
 

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { AppLoading } from 'expo';
 import _ from 'lodash';
 
 import styles from './styles/Home';
-import DeckActions from '../redux/reducers/FetchDecks';
-import LoadingSpinner from '../components/LoadingSpinner';
+import DeckList from '../components/DeckList';
+import { getDecks } from '../services/APIService';
+import logger from '../lib/Logger';
 
 class Home extends Component {
   state = {
@@ -15,43 +16,34 @@ class Home extends Component {
   }
 
   componentDidMount = () => {
-    const { fetchDecks } = this.props;
+    getDecks().then(({ decks, ok }) => {
+      logger('FETCH_DECKS', decks, ok);
 
-    fetchDecks();
+      this.setState({ decks, fetching: !ok });
+    });
   }
 
-  componentWillReceiveProps = (props) => {
-    if (!_.eq(this.state, props)) {
-      this.setState({ ...this.state, ...props });
-    }
-  }
+  onClickDeck = deckID => (
+    () => logger(deckID)
+  )
 
   render = () => {
     const { decks, fetching } = this.state;
 
     if (fetching) {
-      return <LoadingSpinner />;
+      return <AppLoading />;
     }
 
     return (
       <View style={styles.container}>
-        <Text>{decks.map(({ title }) => title).join(' ')}</Text>
+        <DeckList decks={decks} onClick={this.onClickDeck} />
       </View>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  decks: _.get(state, 'fetchDecks.payload.decks', []),
-  fetching: _.get(state, 'fetchDecks.fetching', false),
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchDecks: () => dispatch(DeckActions.FetchDecksRequest()),
-});
-
 Home.propTypes = {
-  fetchDecks: PropTypes.func.isRequired,
+
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

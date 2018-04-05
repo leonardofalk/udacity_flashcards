@@ -1,10 +1,11 @@
-const development = test = __DEV__;
+const development = __DEV__;
+const test = __DEV__;
 const production = !development;
 
 const environment = production ? 'production' : 'development';
 
 const redux = {
-  logging: __DEV__,
+  logging: development,
 };
 
 export {
