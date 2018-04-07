@@ -62,9 +62,9 @@ const updateDeck = async ({ title, card }) => {
     const response = await getDecks();
     const decks = response.decks.map((deck) => {
       if (deck.title === title) {
-        const questions = deck.questions.concat(card);
+        const cards = deck.cards.concat(card);
 
-        return { title, questions };
+        return { title, cards };
       }
 
       return deck;

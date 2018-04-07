@@ -25,6 +25,13 @@ class Show extends Component {
     }
   }
 
+  navigateToAddCard = () => this.props.navigation.navigate({
+    routeName: 'Edit',
+    params: {
+      title: this.state.deck.title,
+    },
+  })
+
   render = () => {
     const { deck } = this.state;
 
@@ -42,7 +49,7 @@ class Show extends Component {
                 Take Quiz
               </Button>
               <WhiteSpace />
-              <Button type="ghost" inline>
+              <Button type="ghost" inline onClick={this.navigateToAddCard}>
                 Add Card
               </Button>
             </WingBlank>

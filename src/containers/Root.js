@@ -4,6 +4,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import Home from './Home';
 import Create from './Create';
 import Show from './Show';
+import Edit from './Edit';
 import TabBar from '../components/TabBar';
 
 const HomeNav = TabNavigator(
@@ -33,6 +34,12 @@ const DeckNav = StackNavigator({
     screen: Show,
     navigationOptions: {
       title: 'Deck',
+    },
+  },
+  Edit: {
+    screen: Edit,
+    navigationOptions: {
+      title: 'Add Card',
     },
   },
   Home: {

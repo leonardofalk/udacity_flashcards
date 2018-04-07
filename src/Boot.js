@@ -5,7 +5,7 @@ import createStore from './redux';
 import Root from './containers/Root';
 // import createDecks from './fixtures/DecksFixtures';
 //
-// createDecks(false);
+// createDecks(true);
 
 const Boot = () => (
   <Provider store={createStore()}>
