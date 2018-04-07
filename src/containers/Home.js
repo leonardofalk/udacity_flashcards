@@ -21,13 +21,13 @@ class Home extends Component {
     fetchDecks();
   }
 
-  onClickDeck = (id) => {
-    this.props.navigation.navigate({
+  onClickDeck = id => (
+    () => this.props.navigation.navigate({
       routeName: 'Show',
 
-      params: { id },
-    });
-  }
+      params: { deck: this.state.decks.find(deck => deck.title === id) },
+    })
+  )
 
   render = () => {
     const { decks, fetching } = this.state;

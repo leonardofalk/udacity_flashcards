@@ -42,7 +42,7 @@ class DeckForm extends Component {
 
   render = () => (
     <WingBlank style={styles.container}>
-      <List renderHeader={() => 'Create a New Deck'}>
+      <List>
         <InputItem
           type="text"
           placeholder="Deck title"

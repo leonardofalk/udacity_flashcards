@@ -31,7 +31,7 @@ class DeckList extends Component {
   }
 
   render = () => (
-    <List renderHeader={() => 'Decks'} style={styles.container}>
+    <List style={styles.container}>
       {this._renderListItems()}
     </List>
   )

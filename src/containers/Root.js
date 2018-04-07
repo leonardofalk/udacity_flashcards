@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabNavigator, SwitchNavigator, StackNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import Home from './Home';
 import Create from './Create';
@@ -35,21 +35,15 @@ const DeckNav = StackNavigator({
       title: 'Deck',
     },
   },
+  Home: {
+    screen: HomeNav,
+  },
+}, {
+  initialRouteName: 'Home',
 });
 
-const SwitchNav = SwitchNavigator(
-  {
-    Home,
-    HomeNav,
-    DeckNav,
-  },
-  {
-    initialRouteName: 'HomeNav',
-  },
-);
-
 const Root = () => (
-  <SwitchNav />
+  <DeckNav />
 );
 
 export default Root;
