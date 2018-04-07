@@ -1,11 +1,12 @@
 import React from 'react';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, SwitchNavigator, StackNavigator } from 'react-navigation';
 
 import Home from './Home';
 import Create from './Create';
+import Show from './Show';
 import TabBar from '../components/TabBar';
 
-const Navigator = TabNavigator(
+const HomeNav = TabNavigator(
   {
     Home: {
       screen: Home,
@@ -23,11 +24,32 @@ const Navigator = TabNavigator(
   {
     tabBarComponent: props => <TabBar {...props} />,
     tabBarPosition: 'bottom',
+    initialRouteName: 'Home',
+  },
+);
+
+const DeckNav = StackNavigator({
+  Show: {
+    screen: Show,
+    navigationOptions: {
+      title: 'Deck',
+    },
+  },
+});
+
+const SwitchNav = SwitchNavigator(
+  {
+    Home,
+    HomeNav,
+    DeckNav,
+  },
+  {
+    initialRouteName: 'HomeNav',
   },
 );
 
 const Root = () => (
-  <Navigator />
+  <SwitchNav />
 );
 
 export default Root;

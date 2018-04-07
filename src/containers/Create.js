@@ -9,6 +9,10 @@ import DeckForm from '../components/DeckForm';
 import CreateDeckActions from '../redux/reducers/CreateDeck';
 
 class Create extends Component {
+  state = {
+    submitting: false,
+  }
+
   onSubmitForm = (title) => {
     const { navigation, createDeck } = this.props;
 
@@ -19,14 +23,13 @@ class Create extends Component {
 
   render = () => (
     <View style={styles.container}>
-      <DeckForm onSubmit={this.onSubmitForm} submitting={this.props.submitting} />
+      <DeckForm onSubmit={this.onSubmitForm} submitting={this.state.submitting} />
     </View>
   )
 }
 
 Create.propTypes = {
   navigation: PropTypes.object.isRequired,
-  submitting: PropTypes.bool.isRequired,
   createDeck: PropTypes.func.isRequired,
 };
 

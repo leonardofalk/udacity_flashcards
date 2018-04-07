@@ -8,7 +8,6 @@ import styles from './styles/Home';
 import DeckList from '../components/DeckList';
 import LoadingSpinner from '../components/LoadingSpinner';
 import FetchActions from '../redux/reducers/FetchDecks';
-import logger from '../lib/Logger';
 
 class Home extends Component {
   state = {
@@ -22,9 +21,13 @@ class Home extends Component {
     fetchDecks();
   }
 
-  onClickDeck = deckID => (
-    () => logger(deckID)
-  )
+  onClickDeck = (id) => {
+    this.props.navigation.navigate({
+      routeName: 'Show',
+
+      params: { id },
+    });
+  }
 
   render = () => {
     const { decks, fetching } = this.state;
@@ -47,6 +50,7 @@ class Home extends Component {
 
 Home.propTypes = {
   fetchDecks: PropTypes.func.isRequired,
+  navigation: PropTypes.object.isRequired,
 };
 
 Home.getDerivedStateFromProps = (nextProps, prevState) => ({
