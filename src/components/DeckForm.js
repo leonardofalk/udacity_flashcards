@@ -8,7 +8,6 @@ import styles from './styles/DeckForm';
 const INITIAL_STATE = {
   hasError: false,
   title: '',
-  submitting: false,
 };
 
 class DeckForm extends Component {
@@ -37,9 +36,8 @@ class DeckForm extends Component {
   }
 
   onSubmitClick = () => {
-    this.setState({ submitting: true });
-
-    this.props.onSubmit(this.state.title).then(() => this.setState(INITIAL_STATE));
+    this.props.onSubmit(this.state.title);
+    this.setState(INITIAL_STATE);
   }
 
   render = () => (
@@ -59,7 +57,7 @@ class DeckForm extends Component {
         <Button
           disabled={_.isEmpty(this.state.title)}
           type="primary"
-          loading={this.state.submitting}
+          loading={this.props.submitting}
           onClick={this.onSubmitClick}
         >
           Confirm
@@ -71,6 +69,7 @@ class DeckForm extends Component {
 
 DeckForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 export default DeckForm;

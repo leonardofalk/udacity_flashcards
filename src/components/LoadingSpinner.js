@@ -1,28 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Icon } from 'antd-mobile';
+import { ActivityIndicator } from 'react-native';
 
 const LoadingSpinner = props => (
-  <Icon
-    type={props.icon}
-    spin
-    style={{
-        fontSize: props.size,
-        color: props.color,
-      }}
-  />
+  <ActivityIndicator {...props} />
 );
 
-LoadingSpinner.propTypes = {
-  color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  icon: PropTypes.string,
-  size: PropTypes.number,
-};
+LoadingSpinner.propTypes = ActivityIndicator.propTypes;
 
 LoadingSpinner.defaultProps = {
+  ...ActivityIndicator.defaultProps,
   color: '#1890FF',
-  icon: 'loading',
-  size: 24,
+  size: 60,
 };
 
 export default LoadingSpinner;

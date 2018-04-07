@@ -8,7 +8,7 @@ export function* getFetchDecks(action) {
   const response = yield call(getDecks, data);
 
   if (response.ok) {
-    yield put(Actions.FetchDecksSuccess(response.payload));
+    yield put(Actions.FetchDecksSuccess(response.decks));
   } else {
     yield put(Actions.FetchDecksFailure(response.error));
   }
@@ -16,4 +16,5 @@ export function* getFetchDecks(action) {
 
 export default function* FetchDecksSaga() {
   yield takeLatest('FETCH_DECKS_REQUEST', getFetchDecks);
+  yield takeLatest('CREATE_DECK_SUCCESS', getFetchDecks);
 }

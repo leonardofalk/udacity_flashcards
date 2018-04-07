@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { View } from 'react-native';
-import { AppLoading } from 'expo';
 import _ from 'lodash';
 
 import styles from './styles/Home';
 import DeckList from '../components/DeckList';
-import { getDecks } from '../services/APIService';
+import LoadingSpinner from '../components/LoadingSpinner';
+import FetchActions from '../redux/reducers/FetchDecks';
 import logger from '../lib/Logger';
 
 class Home extends Component {
@@ -16,11 +17,9 @@ class Home extends Component {
   }
 
   componentDidMount = () => {
-    getDecks().then(({ decks, ok }) => {
-      logger('FETCH_DECKS', decks, ok);
+    const { fetchDecks } = this.props;
 
-      this.setState({ decks, fetching: !ok });
-    });
+    fetchDecks();
   }
 
   onClickDeck = deckID => (
@@ -31,7 +30,11 @@ class Home extends Component {
     const { decks, fetching } = this.state;
 
     if (fetching) {
-      return <AppLoading />;
+      return (
+        <View style={styles.container}>
+          <LoadingSpinner />
+        </View>
+      );
     }
 
     return (
@@ -43,7 +46,21 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-
+  fetchDecks: PropTypes.func.isRequired,
 };
 
-export default Home;
+Home.getDerivedStateFromProps = (nextProps, prevState) => ({
+  ...prevState,
+  ...nextProps,
+});
+
+const mapStateToProps = state => ({
+  decks: _.get(state, 'fetchDecks.payload', []),
+  fetching: _.get(state, 'fetchDecks.fetching', true),
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchDecks: props => dispatch(FetchActions.FetchDecksRequest(props)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
