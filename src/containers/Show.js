@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 // import styles from './styles/Show';
+import FetchDeckActions from '../redux/reducers/FetchDeck';
 
 class Show extends Component {
   state = {
@@ -13,16 +14,14 @@ class Show extends Component {
   }
 
   componentDidMount = () => {
-    const { navigation } = this.props;
-    const deck = _.get(navigation, 'state.params.deck', {});
+    const { fetchDeck, navigation } = this.props;
+    const { title } = navigation.state.params.deck;
+
+    fetchDeck({ title });
 
     navigation.setParams({
       onBackPress: () => navigation.navigate('Home'),
     });
-
-    if (!_.isEmpty(deck)) {
-      this.setState({ deck });
-    }
   }
 
   navigateToAddCard = () => this.props.navigation.navigate({
@@ -46,7 +45,7 @@ class Show extends Component {
           <Card.Body>
             <WingBlank size="lg">
               <Button type="primary" inline>
-                Take Quiz
+                Start Quiz
               </Button>
               <WhiteSpace />
               <Button type="ghost" inline onClick={this.navigateToAddCard}>
@@ -62,6 +61,7 @@ class Show extends Component {
 
 Show.propTypes = {
   navigation: PropTypes.object.isRequired,
+  fetchDeck: PropTypes.func.isRequired,
 };
 
 Show.defaultProps = {
@@ -74,11 +74,11 @@ Show.getDerivedStateFromProps = (nextProps, prevState) => ({
 });
 
 const mapStateToProps = state => ({
-
+  deck: _.get(state, 'fetchDeck.payload', {}) || {},
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  fetchDeck: props => dispatch(FetchDeckActions.FetchDeckRequest(props)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Show);

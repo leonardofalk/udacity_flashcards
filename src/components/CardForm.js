@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { List, InputItem, Toast, Button, WingBlank, WhiteSpace } from 'antd-mobile';
 import _ from 'lodash';
 
-import styles from './styles/DeckForm';
+// import styles from './styles/DeckForm';
 
 const INITIAL_STATE = {
   questionError: false,

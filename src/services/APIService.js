@@ -29,8 +29,9 @@ const getDecks = async () => {
 const getDeck = async ({ title }) => {
   try {
     const { decks } = await getDecks();
+    const deck = decks.find(deckFound => deckFound.title === title);
 
-    return { ok: true, deck: decks[title] };
+    return { ok: true, deck };
   } catch (error) {
     logger(error);
 
@@ -46,9 +47,7 @@ const createDeck = async ({ title }) => {
 
     await setItem(decks);
 
-    logger('CREATE_DECK', decks);
-
-    return { ok: true, decks };
+    return { ok: true, deck: newDeck };
   } catch (error) {
     logger(error);
 
@@ -57,7 +56,6 @@ const createDeck = async ({ title }) => {
 };
 
 const updateDeck = async ({ title, card }) => {
-  logger(card.question, title);
   try {
     const response = await getDecks();
     const decks = response.decks.map((deck) => {
@@ -72,7 +70,7 @@ const updateDeck = async ({ title, card }) => {
 
     await setItem(decks);
 
-    return { ok: true, decks };
+    return { ok: true, title, decks };
   } catch (error) {
     logger(error);
 

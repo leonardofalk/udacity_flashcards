@@ -17,9 +17,9 @@ class Edit extends Component {
     const { title } = navigation.state.params;
     const props = { title, card };
 
-    console.info('UPDATE DECK WITH PROPS', props);
-
     updateDeck(props);
+
+    navigation.goBack();
   }
 
   render = () => (
@@ -39,6 +39,7 @@ Edit.getDerivedStateFromProps = (nextProps, prevState) => ({
 
 const mapStateToProps = state => ({
   submitting: _.get(state, 'editDeck.fetching') || false,
+  deck: _.get(state, 'fetchDeck.payload', {}) || {},
 });
 
 const mapDispatchToProps = dispatch => ({
