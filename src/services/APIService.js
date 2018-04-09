@@ -5,18 +5,22 @@ import logger from '../lib/Logger';
 const getItem = async () => {
   const value = await AsyncStorage.getItem(FLASHCARDS_STORE_KEY);
 
+  logger('GET_ITEM', value);
+
   return JSON.parse(value) || [];
 };
 
 const setItem = async (value) => {
   const put = typeof (value) === 'string' ? value : JSON.stringify(value);
 
+  logger('SET_ITEM', put);
+
   return AsyncStorage.setItem(FLASHCARDS_STORE_KEY, put);
 };
 
 const getDecks = async () => {
   try {
-    const decks = await getItem();
+    const { decks } = await getItem();
 
     return { ok: true, decks };
   } catch (error) {
@@ -42,10 +46,10 @@ const getDeck = async ({ title }) => {
 const createDeck = async ({ title }) => {
   try {
     const newDeck = { title, cards: [] };
-    const response = await getDecks();
-    const decks = response.decks.concat(newDeck);
+    const response = await getItem();
+    response.decks.concat(newDeck);
 
-    await setItem(decks);
+    await setItem(response);
 
     return { ok: true, deck: newDeck };
   } catch (error) {
@@ -57,8 +61,8 @@ const createDeck = async ({ title }) => {
 
 const updateDeck = async ({ title, card }) => {
   try {
-    const response = await getDecks();
-    const decks = response.decks.map((deck) => {
+    const response = await getItem();
+    const newData = response.decks.map((deck) => {
       if (deck.title === title) {
         const cards = deck.cards.concat(card);
 
@@ -68,14 +72,28 @@ const updateDeck = async ({ title, card }) => {
       return deck;
     });
 
-    await setItem(decks);
+    await setItem(newData);
 
-    return { ok: true, title, decks };
+    return { ok: true, title, decks: newData.decks };
   } catch (error) {
     logger(error);
 
     return { ok: false, error };
   }
+};
+
+const registerQuizAnalytics = async () => {
+  const response = await getItem();
+
+  response.quiz.lastTakenAt = new Date();
+
+  await setItem(response);
+};
+
+const getQuizLastTakenAt = async () => {
+  const response = getItem();
+
+  return response.quiz.lastTakenAt;
 };
 
 export {
@@ -85,4 +103,6 @@ export {
   getDeck,
   createDeck,
   updateDeck,
+  registerQuizAnalytics,
+  getQuizLastTakenAt,
 };

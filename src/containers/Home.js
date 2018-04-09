@@ -8,6 +8,7 @@ import styles from './styles/Home';
 import DeckList from '../components/DeckList';
 import LoadingSpinner from '../components/LoadingSpinner';
 import FetchActions from '../redux/reducers/FetchDecks';
+import { setupNotification } from '../services/NotificationService';
 
 class Home extends Component {
   state = {
@@ -19,6 +20,8 @@ class Home extends Component {
     const { fetchDecks } = this.props;
 
     fetchDecks();
+
+    setupNotification();
   }
 
   onClickDeck = id => (

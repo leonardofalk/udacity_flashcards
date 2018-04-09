@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, WingBlank, WhiteSpace } from 'antd-mobile';
-import { Text } from 'react-native';
+import { WingBlank, WhiteSpace } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 // import styles from './styles/Quiz';
+import { registerQuizAnalytics } from '../services/APIService';
+import { restartNotificationService } from '../services/NotificationService';
 import FetchDeckActions from '../redux/reducers/FetchDeck';
 import QuizWizard from '../components/QuizWizard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -21,6 +22,9 @@ class Quiz extends Component {
     const { title } = navigation.state.params;
 
     fetchDeck({ title });
+
+    registerQuizAnalytics();
+    restartNotificationService();
 
     navigation.setParams({
       onBackPress: () => navigation.navigate('Home'),

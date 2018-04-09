@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { environment } from './environment';
 
 const STORAGE_KEY = {
@@ -6,5 +5,7 @@ const STORAGE_KEY = {
   production: '@flashcards:production',
   test: '@flashcards:test',
 };
+
+export const NOTIFICATION_TOKEN = `@flascards:notification:${environment}`;
 
 export const FLASHCARDS_STORE_KEY = STORAGE_KEY[environment];
