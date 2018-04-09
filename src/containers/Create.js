@@ -18,7 +18,11 @@ class Create extends Component {
 
     createDeck({ title });
 
-    navigation.navigate('Home');
+    navigation.navigate({
+      routeName: 'Show',
+
+      params: { deck: { title, cards: [] } },
+    });
   }
 
   render = () => (

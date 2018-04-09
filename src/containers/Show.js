@@ -15,9 +15,11 @@ class Show extends Component {
 
   componentDidMount = () => {
     const { fetchDeck, navigation } = this.props;
-    const { title } = navigation.state.params;
+    const { deck } = navigation.state.params;
 
-    fetchDeck({ title });
+    this.setState({ deck });
+
+    fetchDeck({ title: deck.title });
 
     navigation.setParams({
       onBackPress: () => navigation.navigate('Home'),
@@ -75,10 +77,16 @@ Show.defaultProps = {
   // ...
 };
 
-Show.getDerivedStateFromProps = (nextProps, prevState) => ({
-  ...prevState,
-  ...nextProps,
-});
+Show.getDerivedStateFromProps = (nextProps, prevState) => {
+  if (!_.isEmpty(_.get(nextProps, 'deck', {}))) {
+    return {
+      ...prevState,
+      ...nextProps,
+    };
+  }
+
+  return null;
+};
 
 const mapStateToProps = state => ({
   deck: _.get(state, 'fetchDeck.payload', {}) || {},
