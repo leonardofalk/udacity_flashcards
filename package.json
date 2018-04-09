@@ -27,7 +27,7 @@
     "lint:fix": "eslint ./src --fix",
     "start": "react-native-scripts start",
     "test": "node node_modules/jest/bin/jest.js",
-    "test:ci": "node node_modules/jest/bin/jest.js --coverage --colors --ci",
+    "test:ci": "node node_modules/jest/bin/jest.js --coverage --colors --ci -u",
     "test:coverage": "node node_modules/jest/bin/jest.js --coverage --colors && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html"
   },
   "jest": {
