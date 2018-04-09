@@ -12,12 +12,14 @@ const finishedMessages = [
   { min: 96, max: 100, message: 'You are just awesome!! Keep up the good work!' },
 ];
 
+const INITIAL_STATE = {
+  currentIndex: 0,
+  score: 0,
+  finished: false,
+};
+
 class QuizWizard extends Component {
-  state = {
-    currentIndex: 0,
-    score: 0,
-    finished: false,
-  }
+  state = INITIAL_STATE;
 
   onToggleAnswer = answer => () => Toast.info(answer);
 
@@ -36,6 +38,10 @@ class QuizWizard extends Component {
       finished,
     });
   }
+
+  restartQuiz = () => this.setState(INITIAL_STATE)
+
+  navigateBackToDeck = () => this.props.navigation.goBack()
 
   _renderScoreMessage = () => {
     const { score } = this.state;
@@ -56,6 +62,10 @@ class QuizWizard extends Component {
         </Text>
         <WhiteSpace size="lg" />
         <Icon color="#52c41a" type="check-circle-o" />
+        <WhiteSpace size="lg" />
+        <Button inline type="primary" onClick={this.restartQuiz}>Restart Quiz</Button>
+        <WhiteSpace size="sm" />
+        <Button inline type="primary" onClick={this.navigateBackToDeck}>Back to Deck</Button>
       </View>
     );
   }
@@ -96,6 +106,7 @@ class QuizWizard extends Component {
 
 QuizWizard.propTypes = {
   deck: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
 };
 
 export default QuizWizard;

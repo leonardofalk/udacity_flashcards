@@ -25,7 +25,7 @@ class Home extends Component {
     () => this.props.navigation.navigate({
       routeName: 'Show',
 
-      params: { deck: this.state.decks.find(deck => deck.title === id) },
+      params: { title: this.state.decks.find(deck => deck.title === id).title },
     })
   )
 

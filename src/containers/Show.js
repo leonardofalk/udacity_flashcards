@@ -15,7 +15,7 @@ class Show extends Component {
 
   componentDidMount = () => {
     const { fetchDeck, navigation } = this.props;
-    const { title } = navigation.state.params.deck;
+    const { title } = navigation.state.params;
 
     fetchDeck({ title });
 
