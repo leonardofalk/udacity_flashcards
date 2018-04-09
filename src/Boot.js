@@ -5,7 +5,7 @@ import createStore from './redux';
 import Root from './containers/Root';
 import createDecks from './fixtures/DecksFixtures';
 
-createDecks(false); // create fixtures for the first development run
+createDecks(true); // create fixtures for the first development run
 
 const Boot = () => (
   <Provider store={createStore()}>

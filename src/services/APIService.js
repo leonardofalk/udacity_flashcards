@@ -20,9 +20,9 @@ const setItem = async (value) => {
 
 const getDecks = async () => {
   try {
-    const { decks } = await getItem();
+    const response = await getItem();
 
-    return { ok: true, decks };
+    return { ok: true, decks: response.decks };
   } catch (error) {
     logger(error);
 
@@ -32,8 +32,8 @@ const getDecks = async () => {
 
 const getDeck = async ({ title }) => {
   try {
-    const { decks } = await getDecks();
-    const deck = decks.find(deckFound => deckFound.title === title);
+    const response = await getDecks();
+    const deck = response.decks.find(deckFound => deckFound.title === title);
 
     return { ok: true, deck };
   } catch (error) {
@@ -47,7 +47,7 @@ const createDeck = async ({ title }) => {
   try {
     const newDeck = { title, cards: [] };
     const response = await getItem();
-    response.decks.concat(newDeck);
+    response.decks = response.decks.concat(newDeck);
 
     await setItem(response);
 
@@ -72,7 +72,7 @@ const updateDeck = async ({ title, card }) => {
       return deck;
     });
 
-    await setItem(newData);
+    await setItem({ ...response, decks: newData });
 
     return { ok: true, title, decks: newData.decks };
   } catch (error) {
@@ -91,7 +91,7 @@ const registerQuizAnalytics = async () => {
 };
 
 const getQuizLastTakenAt = async () => {
-  const response = getItem();
+  const response = await getItem();
 
   return response.quiz.lastTakenAt;
 };
