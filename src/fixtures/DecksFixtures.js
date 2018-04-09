@@ -7,7 +7,7 @@ export const clearStorage = async () => AsyncStorage.clear();
 
 export const fixtures = {
   quiz: {
-    lastTakenAt: new Date(),
+    lastTakenAt: new Date(0),
   },
   decks: [
     {

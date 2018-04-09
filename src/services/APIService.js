@@ -82,6 +82,20 @@ const updateDeck = async ({ title, card }) => {
   }
 };
 
+const deleteDeck = async ({ title }) => {
+  try {
+    const response = await getItem();
+    response.decks = response.decks.filter(deck => deck.title !== title);
+    await setItem(response);
+
+    return { ok: true, decks: response.decks, title };
+  } catch (error) {
+    logger(error);
+
+    return { ok: false, error };
+  }
+};
+
 const registerQuizAnalytics = async () => {
   const response = await getItem();
 
@@ -103,6 +117,7 @@ export {
   getDeck,
   createDeck,
   updateDeck,
+  deleteDeck,
   registerQuizAnalytics,
   getQuizLastTakenAt,
 };
