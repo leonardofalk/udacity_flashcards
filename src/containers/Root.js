@@ -1,10 +1,11 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
-import Home from './Home';
 import Create from './Create';
-import Show from './Show';
 import Edit from './Edit';
+import Home from './Home';
+import Quiz from './Quiz';
+import Show from './Show';
 import TabBar from '../components/TabBar';
 
 const HomeNav = TabNavigator(
@@ -34,6 +35,12 @@ const DeckNav = StackNavigator({
     screen: Show,
     navigationOptions: {
       title: 'Deck',
+    },
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz',
     },
   },
   Edit: {

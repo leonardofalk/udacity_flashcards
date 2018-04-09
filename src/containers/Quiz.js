@@ -5,17 +5,20 @@ import { Text } from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-// import styles from './styles/Show';
+// import styles from './styles/Quiz';
 import FetchDeckActions from '../redux/reducers/FetchDeck';
+import QuizWizard from '../components/QuizWizard';
+import LoadingSpinner from '../components/LoadingSpinner';
 
-class Show extends Component {
+class Quiz extends Component {
   state = {
     deck: {},
+    fetching: true,
   }
 
   componentDidMount = () => {
     const { fetchDeck, navigation } = this.props;
-    const { title } = navigation.state.params.deck;
+    const { title } = navigation.state.params;
 
     fetchDeck({ title });
 
@@ -31,61 +34,40 @@ class Show extends Component {
     },
   })
 
-  navigateToQuiz = () => this.props.navigation.navigate({
-    routeName: 'Quiz',
-    params: {
-      title: this.state.deck.title,
-    },
-  })
-
   render = () => {
-    const { deck } = this.state;
+    const { deck, fetching } = this.state;
+    const { navigation } = this.props;
+
+    if (fetching) {
+      return <LoadingSpinner />;
+    }
 
     return (
       <WingBlank size="lg">
         <WhiteSpace size="lg" />
-        <Card>
-          <Card.Header
-            title={<Text>Name: {deck.title}</Text>}
-            extra={<Text>{_.get(deck, 'cards.length', 0)} cards</Text>}
-          />
-          <Card.Body>
-            <WingBlank size="lg">
-              <Button type="primary" inline onClick={this.navigateToQuiz}>
-                Start Quiz
-              </Button>
-              <WhiteSpace />
-              <Button type="ghost" inline onClick={this.navigateToAddCard}>
-                Add Card
-              </Button>
-            </WingBlank>
-          </Card.Body>
-        </Card>
+        <QuizWizard deck={deck} navigation={navigation} />
       </WingBlank>
     );
   }
 }
 
-Show.propTypes = {
+Quiz.propTypes = {
   navigation: PropTypes.object.isRequired,
   fetchDeck: PropTypes.func.isRequired,
 };
 
-Show.defaultProps = {
-  // ...
-};
-
-Show.getDerivedStateFromProps = (nextProps, prevState) => ({
+Quiz.getDerivedStateFromProps = (nextProps, prevState) => ({
   ...prevState,
   ...nextProps,
 });
 
 const mapStateToProps = state => ({
   deck: _.get(state, 'fetchDeck.payload', {}) || {},
+  fetching: _.get(state, 'fetchDeck.fetching', false),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchDeck: props => dispatch(FetchDeckActions.FetchDeckRequest(props)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Show);
+export default connect(mapStateToProps, mapDispatchToProps)(Quiz);

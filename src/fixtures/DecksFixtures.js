@@ -40,9 +40,9 @@ export default async (force = false) => {
     return false;
   }
 
-  const response = getDecks();
+  const response = await getDecks();
 
-  if (!force && !_.isEmpty(_.get(response, 'payload.decks', []))) {
+  if (!force && !_.isEmpty(response.decks)) {
     return false;
   }
 
