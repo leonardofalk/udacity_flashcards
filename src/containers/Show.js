@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 // import styles from './styles/Show';
 import FetchDeckActions from '../redux/reducers/FetchDeck';
+import pluralize from '../services/InflectionService';
 
 class Show extends Component {
   state = {
@@ -42,6 +43,7 @@ class Show extends Component {
 
   render = () => {
     const { deck } = this.state;
+    const cardsLength = _.get(deck, 'cards.length', 0);
 
     return (
       <WingBlank size="lg">
@@ -49,7 +51,7 @@ class Show extends Component {
         <Card>
           <Card.Header
             title={<Text>Name: {deck.title}</Text>}
-            extra={<Text>{_.get(deck, 'cards.length', 0)} cards</Text>}
+            extra={<Text>{cardsLength} {pluralize('card', cardsLength)}</Text>}
           />
           <Card.Body>
             <WingBlank size="lg">

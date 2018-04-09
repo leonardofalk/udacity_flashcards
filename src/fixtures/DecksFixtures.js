@@ -14,11 +14,6 @@ export const fixtures = {
       title: 'react',
       cards: [
         {
-          question: 'Are these very dumb questions ?',
-          answer: 'Yes',
-        },
-
-        {
           question: 'Is ReactJS the coolest library ?',
           answer: 'Yes',
         },

@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 import _ from 'lodash';
 
 import styles from './styles/DeckList';
+import pluralize from '../services/InflectionService';
 
 const { Item } = List;
 
@@ -25,7 +26,7 @@ class DeckList extends Component {
         key={key}
       >
         <Text>{title}</Text>
-        <Text style={styles.subtitle}>{cards.length} cards</Text>
+        <Text style={styles.subtitle}>{cards.length} {pluralize('card', cards.length)}</Text>
       </Item>
     ));
   }
