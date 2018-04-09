@@ -17,4 +17,5 @@ export function* getFetchDecks(action) {
 export default function* FetchDecksSaga() {
   yield takeLatest('FETCH_DECKS_REQUEST', getFetchDecks);
   yield takeLatest('CREATE_DECK_SUCCESS', getFetchDecks);
+  yield takeLatest('EDIT_DECK_SUCCESS', getFetchDecks);
 }
