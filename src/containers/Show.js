@@ -64,7 +64,7 @@ class Show extends Component {
           />
           <Card.Body>
             <WingBlank size="lg">
-              <Button type="primary" inline onClick={this.navigateToQuiz}>
+              <Button type="primary" disabled={cardsLength === 0} inline onClick={this.navigateToQuiz}>
                 Start Quiz
               </Button>
               <WhiteSpace />
